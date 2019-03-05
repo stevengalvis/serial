@@ -12,12 +12,18 @@ var port = new SerialPort("/dev/tty.usbserial-AL02K9OD", {
 port.on("open", function() {
   console.log("open");
 
-  port.write("S");
-  port.write("I");
-  port.write("\r");
-  port.write("\n");
+  // port.write("S");
+  // port.write("I");
+  setInterval(read, 1000);
 
-  port.on("data", function(data) {
-    console.log("here", data, data.toString("utf8"));
-  });
+  function read() {
+    port.write("S");
+    port.write("x");
+    port.write("1");
+    port.write("\r");
+    port.write("\n");
+    port.on("data", function(data) {
+      console.log(`here `, data, data.toString("utf8"));
+    });
+  }
 });
